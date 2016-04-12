@@ -24,7 +24,6 @@ static-react RootComponent.js > index.html
 - `-b`, `--babel` - pass babelConfig via a file that export an object
 - `--no-doctype` - omit `<!DOCTYPE html>` from the beginning of the returned string
 
-
 ## Example
 
 See [/example](example)
