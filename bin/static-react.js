@@ -1,31 +1,37 @@
 #!/usr/bin/env node
 
-require('babel-register')({
+var babelConfig = {
   presets: [
     'es2015',
     'stage-0',
     'react'
   ]
-})
+}
 
 var React = require('react')
 var ReactDOMServer = require('react-dom/server')
 var path = require('path')
 var program = require('commander')
-
-var version = '3.2.0'
+var dir = process.cwd()
+var version = '3.2.1'
 
 program
   .version(version)
   .option('[component]', 'Root React component')
   .option('-p, --props [props]', 'Props')
+  .option('-b, --babel [babel]', 'BabelConfig')
   .option('--no-doctype', 'Remove <!DOCTYPE html> from beginning of string')
   .parse(process.argv)
+
+if (program.babel) {
+  Object.assign(babelConfig, require(path.join(dir, program.babel)))
+}
+
+require('babel-register')(babelConfig)
 
 if (program.args.length) {
   var html
   var props = {}
-  var dir = process.cwd()
   var file = path.join(dir, program.args[0])
   var Component = require(file)
 
